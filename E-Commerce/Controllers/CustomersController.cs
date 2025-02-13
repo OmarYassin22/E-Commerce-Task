@@ -41,20 +41,20 @@ public class CustomersController : ApiController
     }
 
 
-    // POST: api/Customers
-    //[HttpPost]
-    //[Route("api/customers")]
-    //public async Task<IHttpActionResult> Post([FromBody] CustomerRequest value)
-    //{
-    //    if (value == null)
-    //        return BadRequest("Add Valid User");
-    //    _repo.Add(value.Adapt<Customer>());
-    //    var res = await _repo.SaveAsync();
-    //    if (res > 0)
-    //        return Ok();
-    //    return BadRequest();
+    //POST: api/Customers
+   [HttpPost]
+   [Route("")]
+    public async Task<IHttpActionResult> Post([FromBody] CustomerRequest value)
+    {
+        if (value == null)
+            return BadRequest("Add Valid User");
+        _repo.Add(value.Adapt<Customer>());
+        var res = await _repo.SaveAsync();
+        if (res > 0)
+            return Ok();
+        return BadRequest();
 
-    //}
+    }
 
     //// PUT: api/Customers/5
     //public void Put(int id, [FromBody] string value)
