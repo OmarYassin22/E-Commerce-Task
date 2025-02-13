@@ -18,8 +18,7 @@ namespace E_Commerce
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            UnityConfig.RegisterComponents(); // Register Unity IoC
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            UnityConfig.RegisterComponents(); 
         }
     }
 }
