@@ -1,17 +1,20 @@
-﻿using System;
+﻿using E_Commerce.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace E_Commerce.Models
+public class Order
 {
-    public class Order
-    {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public float Price { get; set; }
-        public int Quantity { get; set; }
-        public Customer Customer { get; set; }
-    }
+    [Required]
+    public decimal TotoalPrice { get; set; }
+
+    public DateTime? ShippedDate { get; set; }
+    public DateTime? ArriveDate { get; set; }
+
+    public virtual ICollection<ApplicationUser> Customers { get; set; } = new HashSet<ApplicationUser>();
 }

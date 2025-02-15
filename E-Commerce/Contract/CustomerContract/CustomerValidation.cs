@@ -3,15 +3,15 @@ using FluentValidation;
 
 namespace E_Commerce.Contract
 {
-    public class CustomerValidation : AbstractValidator<Customer>
+    public class CustomerValidation : AbstractValidator<ApplicationUser>
     {
         public CustomerValidation()
         {
-            RuleFor(c => c.FirstNme).NotEmpty();
-            RuleFor(c => c.LastNme).NotEmpty();
+            RuleFor(c => c.FirstName).NotEmpty();
+            RuleFor(c => c.LastName).NotEmpty();
             RuleFor(c => c.Address).NotEmpty();
             RuleFor(c => c.Email).EmailAddress();
-            RuleFor(c => c.Phone).NotEmpty();
+            RuleFor(c => c.PhoneNumber).NotEmpty();
         }
 
     }

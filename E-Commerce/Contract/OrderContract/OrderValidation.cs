@@ -7,9 +7,8 @@ namespace E_Commerce.Contract
     {
         public OrderValidation()
         {
-            RuleFor(o=>o.Name).NotEmpty();
-            RuleFor(o=>o.Price).NotEmpty();
-            RuleFor(o=>o.Quantity).NotEmpty();
+            //RuleFor(o=>o.Price).NotEmpty();
+            //RuleFor(o=>o.Quantity).NotEmpty();
 
         }
 

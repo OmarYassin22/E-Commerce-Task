@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.Contract.ReposContract
+namespace E_Commerce.Contract
 {
-    public interface IRepo<T> where T : class
+    public interface IGenericRepo<T> where T : class
     {
-
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(object id);
         void Add(T entity);
         void Update(T entity);
-        void Delete(int id);
+        void Delete(T entity);
         Task<int> SaveAsync();
     }
 }
