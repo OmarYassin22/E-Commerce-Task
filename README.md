@@ -6,6 +6,8 @@ This project utilizes several technologies and frameworks to build a robust e-co
 - **.NET Framework 4.8** with Dependency Injection
 - **Entity Framework 6.5.1** for data access
 - **ASP.NET Identity** for authentication and authorization
+- **JWT Tokens** for authentication
+- **Filter Attributes** for authentication and handling global exceptions
 - **NLog** for logging information and errors
 - **Generic Repository Pattern** for business logic
 
@@ -19,6 +21,12 @@ Entity Framework 6.5.1 is used as the ORM (Object-Relational Mapper) for data ac
 
 ### ASP.NET Identity
 ASP.NET Identity is used to handle authentication and authorization within the application, ensuring secure access to resources.
+
+### JWT Tokens
+JWT tokens are used for secure authentication. This ensures that each request is authenticated using a token-based system.
+
+### Filter Attributes
+Filter attributes are used for both authentication and handling global exceptions. This allows for centralized handling of authentication and errors.
 
 ### NLog
 NLog is used for logging information and errors. It helps in tracking application behavior and debugging issues effectively.
