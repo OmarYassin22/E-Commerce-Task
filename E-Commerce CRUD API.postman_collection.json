@@ -1,0 +1,528 @@
+{
+  "info": {
+    "_postman_id": "16e01eb3-1853-4602-91a6-03e589ac4e5b",
+    "name": "E-Commerce CRUD API",
+    "description": "This collection contains endpoints for managing authentication, customers, orders, and customer-order relationships in the E-Commerce system.\n\nAuthentication:\n- SignUp: Register a new user (Admin or Customer).\n- SignIn: Authenticate user and retrieve JWT token.\n\nCustomers Management:\n- Get All Customers (Admin only): Retrieves all registered customers.\n- Get Customer By ID: Fetches a specific customer.\n- Create Customer (Admin only): Creates a new customer.\n- Update Customer (Admin only): Updates an existing customer.\n- Delete Customer (Admin only): Deletes a customer.\n\nOrders Management:\n- Get All Orders (Admin only): Retrieves all orders.\n- Get Order By ID: Fetches a specific order.\n- Create Order: Creates a new order.\n- Update Order: Updates an existing order.\n- Delete Order (Admin only): Deletes an order.\n\nCustomers-Orders Management:\n- Get Customers for an Order (Admin only): Fetches all customers assigned to a specific order.\n- Get Orders for a Customer: Fetches all orders associated with a specific customer.\n- Assign Customer to Order (Admin only): Associates a customer with an order.\n- Remove Customer from Order (Admin only): Removes a customer from an order.\n\nAuthorization:\n- All endpoints require authentication via a Bearer Token.\n- Admin-only routes are restricted and require admin privileges.\n- Customers can access their own order details but not other users' data.\n\nUsage Instructions:\n1. Use SignIn to obtain a JWT token.\n2. Set the token variable in Postman to authenticate requests.\n3. Call relevant API endpoints using the correct HTTP method and payload.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "20107152"
+  },
+
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "SignUp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"FirstName\":\"omar\",\r\n    \"LastName\":\"Sleem\",\r\n    \"Address\":\"Benha\",\r\n    \"Phone\":\"01234567891\",\r\n    \"Password\":\"P@ssword123\",\r\n    \"Email\":\"Omar@gmail.com\"\r\n\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}api/Auth/signup",
+              "host": ["{{base_url}}api"],
+              "path": ["Auth", "signup"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SignIn",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Token is added to collection variable\", function () {\r",
+                  "    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \r\n    // \"Email\":\"Omar@gmail.com\",\r\n    // \"Password\":\"P@ssword123\"\r\n    \"Email\":\"admin@admin.com\",\r\n    \"Password\":\"P@ssword123\"\r\n\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}api/Auth/Login",
+              "host": ["{{base_url}}api"],
+              "path": ["Auth", "Login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers/{{customerId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"FirstName\": \"Ahemd\",\r\n    \"LastName\": \"Ali\",\r\n    \"Address\": \"Benha\",\r\n    \"Email\": \"Ahemd1@gmail.com\",\r\n    \"password\":\"P@ssword123\",\r\n    \"Role\":\"Admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"FirstName\": \"UPDATE Ahemd\",\r\n    \"LastName\": \"Ali\",\r\n    \"Address\": \"Benha\",\r\n    \"Email\": \"Ahemd@gmail.com\",\r\n    \"password\":\"P@ssword123\",\r\n    \"Role\":\"Admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/customers/{{customerId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers/{{customerId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{orderId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"orderId\", jsonData.Id);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TotoalPrice\": 100.50,\r\n    \"ShippedDate\": \"2025-02-15T10:00:00Z\",\r\n    \"ArriveDate\": \"2025-02-20T10:00:00Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"TotoalPrice\": 150.50,\r\n    \"ShippedDate\": \"2025-02-15T10:00:00Z\",\r\n    \"ArriveDate\": \"2025-02-20T10:00:00Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{orderId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{orderId}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CustomersOrders",
+      "item": [
+        {
+          "name": "Get All CustomersOrders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers-orders",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers-orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customers Orders By CustomerID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers-orders/customer/{{customerId}}/orders",
+              "host": ["{{base_url}}"],
+              "path": [
+                "api",
+                "customers-orders",
+                "customer",
+                "{{customerId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Orders Customers By OrderID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers-orders/order/1/customers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "customers-orders", "order", "1", "customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create CustomersOrders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"CustomerId\": \"{{customerId}}\",\r\n    \"OrderId\":1,\r\n    \"OrderDate\": \"2024-02-15T10:00:00Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:44317/api/customers-orders/assign",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "44317",
+              "path": ["api", "customers-orders", "assign"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete CustomersOrders",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/customers-orders/remove/4a0b175e-14df-4681-8353-6c625580849e/3",
+              "host": ["{{base_url}}"],
+              "path": [
+                "api",
+                "customers-orders",
+                "remove",
+                "4a0b175e-14df-4681-8353-6c625580849e",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "orderId",
+      "value": "6",
+      "type": "default"
+    },
+    {
+      "key": "customerId",
+      "value": "4010506d-fc2b-4d42-998b-1d5666de27ea",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AYWRtaW4uY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW5AYWRtaW4uY29tIiwic3ViIjoiNGEwYjE3NWUtMTRkZi00NjgxLTgzNTMtNmM2MjU1ODA4NDllIiwianRpIjoiOTQxMDEyMzgtN2VlNS00NWYxLTgwYzUtNzVkODNlYzFmMTgyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3Mzk2MTgwODIsImlzcyI6IkUtQ29tbWVyaWNlIiwiYXVkIjoiRS1Db21tZXJpY2UgVXNlcnMifQ.lXShsbhETQzeH4aHkVsIic90XLsYZ5h3c_wb7ZVHIW4",
+      "type": "string"
+    },
+    {
+      "key": "base_Url",
+      "value": "https://localhost:44317/",
+      "type": "string"
+    }
+  ]
+}
