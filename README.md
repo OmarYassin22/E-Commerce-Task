@@ -10,6 +10,7 @@ This project utilizes several technologies and frameworks to build a robust e-co
 - **Filter Attributes** for authentication and handling global exceptions
 - **NLog** for logging information and errors
 - **Generic Repository Pattern** for business logic
+- **Visual Studio 2019 Community** for development
 
 ## Technologies Used
 
@@ -33,6 +34,9 @@ NLog is used for logging information and errors. It helps in tracking applicatio
 
 ### Generic Repository Pattern
 The business logic is implemented using the Generic Repository Pattern, which promotes a clean separation of concerns and code reusability.
+
+### Visual Studio 2019 Community
+The development environment used for this project is Visual Studio 2019 Community, which provides a comprehensive set of tools for building and debugging the application.
 
 ## Models Used
 - **User:** Represents the users of the application.
